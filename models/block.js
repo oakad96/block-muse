@@ -17,6 +17,7 @@ class HeaderBlock extends Block {
   constructor(id, content, level) {
     super(id, blockTypes.HEADER, content);
     this.level = level;
+    this.type = level;
   }
 }
 

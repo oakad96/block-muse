@@ -1,6 +1,6 @@
 // components/blocks/Header.js
 import React from "react";
-import { Box, Heading } from "@chakra-ui/react";
+import { Editable, EditableInput, EditablePreview } from "@chakra-ui/react";
 
 export const Header = ({ level, content }) => {
   const getFontSize = () => {
@@ -17,10 +17,13 @@ export const Header = ({ level, content }) => {
   };
 
   return (
-    <Box my={4}>
-      <Heading as={`h${level?.slice(-1)}`} fontSize={getFontSize()}>
-        {content || ""}
-      </Heading>
-    </Box>
+    <Editable
+      defaultValue={content}
+      fontSize={getFontSize()}
+      aas={`h${level?.slice(-1)}`}
+    >
+      <EditablePreview />
+      <EditableInput />
+    </Editable>
   );
 };

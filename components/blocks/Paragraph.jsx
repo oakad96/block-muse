@@ -1,10 +1,16 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Editable, EditableInput, EditablePreview } from "@chakra-ui/react";
 
-export const Paragraph = ({ content }) => {
+export const Paragraph = ({ content, onChange }) => {
   return (
-    <Box my={4}>
-      <Text fontSize="md">{content}</Text>
-    </Box>
+    <Editable
+      onKeyDown={(e) => console.log(e.target.value)}
+      defaultValue={content}
+      fontSize="md"
+      as="p"
+    >
+      <EditablePreview />
+      <EditableInput />
+    </Editable>
   );
 };

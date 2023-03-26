@@ -44,12 +44,6 @@ const mockBlocks = [
     content:
       "This is the second paragraph of Section 2, offering a deeper analysis.",
   },
-  {
-    id: 9,
-    type: "FORMULA",
-    content: "=3+5",
-    result: "8",
-  },
 ];
 
 export default mockBlocks;

@@ -1,18 +1,15 @@
-import { Sheet, AddButton, DataSourceLoader, BlocksList } from "../components";
-import { Center } from "@chakra-ui/react";
-import mockBlocks from "../datasets/mockBlocks";
+import { Sheet, BlocksList } from "../components";
+import BlocksContext from "@/context/BlocksContext";
+import React, { useContext } from "react";
 
-console.log(mockBlocks);
+function Home() {
+  const { blocks } = useContext(BlocksContext);
 
-export default function Home() {
   return (
     <Sheet title="Document">
-      <DataSourceLoader getDataFunc={() => mockBlocks} resourceName="blocks">
-        <BlocksList />
-        <Center>
-          <AddButton />
-        </Center>
-      </DataSourceLoader>
+      <BlocksList key={blocks.length} />
     </Sheet>
   );
 }
+
+export default React.memo(Home);
