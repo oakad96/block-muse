@@ -35,11 +35,12 @@ export const BlocksList = React.memo(() => {
       {blocks.map((block) => {
         return (
           <Block
+            id={block.id}
             key={block.id}
             type={block.type}
             content={block.content}
             onChange={(e) => {
-              console.log(e);
+              console.log(this);
             }}
           />
         );

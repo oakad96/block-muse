@@ -2,6 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import BlocksContext from "../context/BlocksContext";
 import React, { useState } from "react";
 import mockBlocks from "@/datasets/mockBlocks";
+import { setIdsToIndex } from "@/utils/helpers";
 
 export default function App({ Component, pageProps }) {
   const [blocks, setBlocks] = useState(mockBlocks);
@@ -19,11 +20,21 @@ export default function App({ Component, pageProps }) {
     });
   };
 
-  const updateBlocks = (changedBlock) => {
+  const deleteBlock = (id) => {
+    setBlocks((prevBlocks) => {
+      const newBlocks = prevBlocks.filter((block) => block.id !== id);
+      return setIdsToIndex(newBlocks);
+    });
+  };
+
+  const updateBlockContent = (id, updatedContent) => {
     setBlocks((prevBlocks) => {
       const newBlocks = prevBlocks.map((block) => {
-        if (block.id === changedBlock.id) {
-          return changedBlock;
+        if (block.id === id) {
+          return {
+            ...block,
+            content: updatedContent,
+          };
         }
         return block;
       });
@@ -39,7 +50,13 @@ export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <BlocksContext.Provider
-        value={{ blocks, addBlock, resetBlocks, updateBlocks }}
+        value={{
+          blocks,
+          addBlock,
+          resetBlocks,
+          updateBlockContent,
+          deleteBlock,
+        }}
       >
         <Component {...pageProps} />
       </BlocksContext.Provider>

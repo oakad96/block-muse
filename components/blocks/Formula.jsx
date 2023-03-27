@@ -2,9 +2,9 @@
 import React from "react";
 import { Box, Input, Text } from "@chakra-ui/react";
 
-export const Formula = ({ formula, result }) => {
+export const Formula = ({ id, formula, result }) => {
   return (
-    <Box my={4}>
+    <Box id={id} my={4}>
       <Input
         placeholder="Enter formula"
         value={formula || ""}
