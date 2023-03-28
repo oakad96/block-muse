@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import BlocksContext from "../context/BlocksContext";
 import mockBlocks from "@/datasets/mockBlocks";
 import { ChakraProvider, CircularProgress, Center } from "@chakra-ui/react";
-import { setIdsToIndex } from "@/utils/helpers";
 
 export default function App({ Component, pageProps }) {
   const [blocks, setBlocks] = useState(null);
@@ -29,8 +28,7 @@ export default function App({ Component, pageProps }) {
 
     deleteBlock(id) {
       setBlocks((prevBlocks) => {
-        const newBlocks = prevBlocks.filter((block) => block.id !== id);
-        return setIdsToIndex(newBlocks);
+        return prevBlocks.filter((block) => block.id !== id);
       });
     },
 
