@@ -2,7 +2,7 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import React from "react";
 
-export const DragHandle = () => {
+export const DragHandle = (props) => {
   return (
     <IconButton
       variant="ghost"
@@ -15,6 +15,7 @@ export const DragHandle = () => {
           cursor: "grabbing",
         },
       }}
+      {...props}
     />
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import BlocksContext from "../../context/BlocksContext";
 
-export const Paragraph = ({ id, content, isDragging }) => {
+export const Paragraph = ({ id, content }) => {
   const { updateBlockContent } = useContext(BlocksContext);
 
   const handleKeyDown = (e) => {
@@ -17,32 +17,25 @@ export const Paragraph = ({ id, content, isDragging }) => {
   };
 
   return (
-    <>
-      <Flex minW="full" alignItems={"center"}>
-        <Editable
-          minW="full"
-          id={id}
-          onKeyDown={handleKeyDown}
-          defaultValue={content}
-          fontSize="md"
-          as="p"
-        >
-          <EditablePreview />
-          <EditableInput
-            isReadOnly={!!isDragging}
-            sx={{
-              "&:focus": {
-                outline: "none",
-                border: "none",
-                boxShadow: "none",
-              },
-            }}
-          />
-        </Editable>
-        <Box>
-          <DeleteButton id={id} />
-        </Box>
-      </Flex>
-    </>
+    <Flex minW="full" alignItems={"center"}>
+      <Editable
+        id={id}
+        onKeyDown={handleKeyDown}
+        defaultValue={content}
+        fontSize="md"
+        as="p"
+      >
+        <EditablePreview />
+        <EditableInput
+          sx={{
+            "&:focus": {
+              outline: "none",
+              border: "none",
+              boxShadow: "none",
+            },
+          }}
+        />
+      </Editable>
+    </Flex>
   );
 };

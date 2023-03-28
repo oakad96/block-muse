@@ -21,7 +21,7 @@ export function DeleteButton({ id }) {
       icon={<DeleteIcon />}
       sx={{
         position: "relative",
-        right: "28px",
+        justifySelf: "flex-end",
         ":hover": {
           color: "red.500",
         },

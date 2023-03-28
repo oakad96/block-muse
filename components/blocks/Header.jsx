@@ -9,7 +9,7 @@ import {
 import BlocksContext from "@/context/BlocksContext";
 import { DeleteButton } from "..";
 
-export const Header = ({ id, level, content, isDragging }) => {
+export const Header = ({ id, level, content }) => {
   const { updateBlockContent } = useContext(BlocksContext);
 
   const getFontSize = () => {
@@ -32,7 +32,6 @@ export const Header = ({ id, level, content, isDragging }) => {
   return (
     <Flex minW="full" alignItems={"center"}>
       <Editable
-        minW="full"
         id={id}
         defaultValue={content}
         fontSize={getFontSize()}
@@ -41,7 +40,6 @@ export const Header = ({ id, level, content, isDragging }) => {
       >
         <EditablePreview />
         <EditableInput
-          isReadOnly={!!isDragging}
           sx={{
             "&:focus": {
               outline: "none",
@@ -51,7 +49,6 @@ export const Header = ({ id, level, content, isDragging }) => {
           }}
         />
       </Editable>
-      <DeleteButton id={id} />
     </Flex>
   );
 };

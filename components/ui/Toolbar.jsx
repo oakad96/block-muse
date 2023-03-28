@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, ButtonGroup, Center, Box } from "@chakra-ui/react";
+import BlocksContext from "@/context/BlocksContext";
 
 export function Toolbar({ handleAddBlock, handleResetBlocks }) {
+  const { blocks, addBlock, resetBlock } = useContext(BlocksContext);
+
   return (
     <Box mt={4} pt={4}>
       <Center>

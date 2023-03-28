@@ -1,10 +1,9 @@
 import { Header } from "./Header";
 import { Paragraph } from "./Paragraph";
 import { Formula } from "./Formula";
-import { DragHandle } from "..";
 import { Flex } from "@chakra-ui/react";
 
-export const Block = ({ id, type, content, isDragging }) => {
+export const Block = ({ id, type, content }) => {
   const renderBlock = () => {
     switch (type) {
       case "H1":
@@ -12,27 +11,19 @@ export const Block = ({ id, type, content, isDragging }) => {
       case "H3":
         return (
           <Flex minW="full" alignItems="center">
-            <DragHandle />
-            <Header
-              id={id}
-              level={type}
-              content={content}
-              isDragging={isDragging}
-            />
+            <Header id={id} level={type} content={content} />
           </Flex>
         );
       case "PARAGRAPH":
         return (
-          <Flex alignItems="center">
-            <DragHandle />
-            <Paragraph id={id} content={content} isDragging={isDragging} />
+          <Flex minW="full" alignItems="center">
+            <Paragraph id={id} content={content} />
           </Flex>
         );
       case "FORMULA":
         return (
-          <Flex justifyContent="center">
-            <DragHandle />
-            <Formula id={id} result={content} isDragging={isDragging} />;
+          <Flex minW="full" justifyContent="center">
+            <Formula id={id} result={content} />;
           </Flex>
         );
       default:

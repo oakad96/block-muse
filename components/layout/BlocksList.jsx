@@ -19,7 +19,7 @@ export const BlocksList = React.memo(() => {
       case "H3":
         return addBlock(new HeaderBlock(blocks.length + 1, "H3", "H3"));
       case "FORMULA":
-        return addBlock(new FormulaBlock(blocks.length + 1, "=1+1"));
+        return addBlock(new FormulaBlock(blocks.length + 1, "= 1+1"));
       case "PARAGRAPH":
         return addBlock(new ParagraphBlock(blocks.length + 1, "Paragraph"));
       default:
