@@ -1,17 +1,15 @@
-// components/blocks/Header.js
 import React, { useContext } from "react";
 import {
   Editable,
   EditableInput,
   EditablePreview,
   Flex,
-  Spacer,
 } from "@chakra-ui/react";
 
 import BlocksContext from "@/context/BlocksContext";
 import { DeleteButton } from "..";
 
-export const Header = ({ id, level, content }) => {
+export const Header = ({ id, level, content, isDragging }) => {
   const { updateBlockContent } = useContext(BlocksContext);
 
   const getFontSize = () => {
@@ -32,9 +30,9 @@ export const Header = ({ id, level, content }) => {
   };
 
   return (
-    <Flex alignItems={"center"}>
+    <Flex minW="full" alignItems={"center"}>
       <Editable
-        minW={"full"}
+        minW="full"
         id={id}
         defaultValue={content}
         fontSize={getFontSize()}
@@ -42,7 +40,16 @@ export const Header = ({ id, level, content }) => {
         onKeyDown={handleKeyDown}
       >
         <EditablePreview />
-        <EditableInput />
+        <EditableInput
+          isReadOnly={!!isDragging}
+          sx={{
+            "&:focus": {
+              outline: "none",
+              border: "none",
+              boxShadow: "none",
+            },
+          }}
+        />
       </Editable>
       <DeleteButton id={id} />
     </Flex>

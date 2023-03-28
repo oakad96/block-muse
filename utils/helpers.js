@@ -1,6 +1,6 @@
 const setIdsToIndex = (arr) => {
   return arr.map((item, index) => {
-    return { ...item, id: index };
+    return { ...item, id: index + 1 };
   });
 };
 

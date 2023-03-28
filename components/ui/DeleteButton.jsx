@@ -1,8 +1,9 @@
 import React from "react";
 import { IconButton } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
 import BlocksContext from "../../context/BlocksContext";
 import { useContext } from "react";
+import { MdDelete } from "react-icons/md";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export function DeleteButton({ id }) {
   const { deleteBlock } = useContext(BlocksContext);
@@ -14,13 +15,16 @@ export function DeleteButton({ id }) {
   return (
     <IconButton
       onClick={handleDelete}
+      colorScheme="blackAlpha"
       variant="ghost"
-      size="xs"
+      size="s"
       icon={<DeleteIcon />}
       sx={{
         position: "relative",
-        top: "2px",
-        right: "-24px",
+        right: "28px",
+        ":hover": {
+          color: "red.500",
+        },
       }}
     />
   );

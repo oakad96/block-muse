@@ -1,12 +1,13 @@
 import { Toolbar } from "./../ui/Toolbar";
-import React, { useContext } from "react";
-import { Block } from "..";
+import React, { useContext, useCallback } from "react";
 import BlocksContext from "@/context/BlocksContext";
 import { ParagraphBlock, HeaderBlock, FormulaBlock } from "../../models/block";
 import { Button } from "@chakra-ui/react";
+import { DraggableBlock } from "../blocks/DraggableBlock";
 
 export const BlocksList = React.memo(() => {
-  const { blocks, addBlock, resetBlocks } = useContext(BlocksContext);
+  const { blocks, addBlock, resetBlocks, setBlocks } =
+    useContext(BlocksContext);
 
   const handleAddBlock = (e) => {
     const type = e.target.value;
@@ -30,20 +31,22 @@ export const BlocksList = React.memo(() => {
     resetBlocks();
   };
 
+  const renderBlock = useCallback((block, index) => {
+    return (
+      <DraggableBlock
+        index={index}
+        id={block.id}
+        key={block.id}
+        type={block.type}
+        content={block.content}
+      />
+    );
+  }, []);
+
   return (
     <>
-      {blocks.map((block) => {
-        return (
-          <Block
-            id={block.id}
-            key={block.id}
-            type={block.type}
-            content={block.content}
-            onChange={(e) => {
-              console.log(this);
-            }}
-          />
-        );
+      {blocks.map((block, i) => {
+        return renderBlock(block, i);
       })}
       <Toolbar
         handleAddBlock={handleAddBlock}

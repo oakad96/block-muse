@@ -48,18 +48,19 @@ export default function App({ Component, pageProps }) {
   };
 
   return (
-    <ChakraProvider>
-      <BlocksContext.Provider
-        value={{
-          blocks,
-          addBlock,
-          resetBlocks,
-          updateBlockContent,
-          deleteBlock,
-        }}
-      >
+    <BlocksContext.Provider
+      value={{
+        blocks,
+        setBlocks,
+        addBlock,
+        resetBlocks,
+        updateBlockContent,
+        deleteBlock,
+      }}
+    >
+      <ChakraProvider>
         <Component {...pageProps} />
-      </BlocksContext.Provider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </BlocksContext.Provider>
   );
 }
