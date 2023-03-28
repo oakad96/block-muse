@@ -1,9 +1,34 @@
 import React, { useContext } from "react";
 import { Button, ButtonGroup, Center, Box } from "@chakra-ui/react";
 import BlocksContext from "@/context/BlocksContext";
+import { ParagraphBlock, HeaderBlock, FormulaBlock } from "../../models/block";
+import { generateId } from "@/utils/helpers";
 
-export function Toolbar({ handleAddBlock, handleResetBlocks }) {
-  const { blocks, addBlock, resetBlock } = useContext(BlocksContext);
+export function Toolbar() {
+  const { blocks, addBlock, resetBlocks } = useContext(BlocksContext);
+
+  const handleAddBlock = (e) => {
+    const type = e.target.value;
+    const id = generateId();
+    switch (type) {
+      case "H1":
+        return addBlock(new HeaderBlock(id, "H1", "H1"));
+      case "H2":
+        return addBlock(new HeaderBlock(id, "H2", "H2"));
+      case "H3":
+        return addBlock(new HeaderBlock(id, "H3", "H3"));
+      case "FORMULA":
+        return addBlock(new FormulaBlock(id, "= 1+1"));
+      case "PARAGRAPH":
+        return addBlock(new ParagraphBlock(id, "Paragraph"));
+      default:
+        return null;
+    }
+  };
+
+  const handleResetBlocks = () => {
+    resetBlocks();
+  };
 
   return (
     <Box mt={4} pt={4}>

@@ -7,6 +7,7 @@ export const DragHandle = (props) => {
     <IconButton
       variant="ghost"
       size="xs"
+      maxW="xs"
       icon={<DragHandleIcon />}
       sx={{
         cursor: "grab",

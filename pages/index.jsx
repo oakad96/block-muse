@@ -1,8 +1,12 @@
-import { Sheet, BlocksList } from "../components";
-import BlocksContext from "@/context/BlocksContext";
 import React, { useContext } from "react";
-import DragDropBlocks from "@/components/layout/DragDropBlocks";
-import { Card, Center, Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import BlocksContext from "../context/BlocksContext";
+import {
+  Sheet,
+  DragDropBlocksList,
+  Toolbar,
+  ConsoleResourceButton,
+} from "../components";
 
 function Home() {
   const { blocks } = useContext(BlocksContext);
@@ -10,14 +14,10 @@ function Home() {
   return (
     <Flex direction="column">
       <Sheet title="Document">
-        <BlocksList key={blocks.length} />
+        <DragDropBlocksList />
+        <Toolbar />
+        <ConsoleResourceButton resource={blocks} />
       </Sheet>
-      <Spacer />
-      <Center>
-        <Card minW="lg" minH="container.xl" shadow="xl">
-          <DragDropBlocks />
-        </Card>
-      </Center>
     </Flex>
   );
 }

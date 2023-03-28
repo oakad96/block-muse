@@ -5,9 +5,7 @@ import {
   EditablePreview,
   Flex,
 } from "@chakra-ui/react";
-
 import BlocksContext from "@/context/BlocksContext";
-import { DeleteButton } from "..";
 
 export const Header = ({ id, level, content }) => {
   const { updateBlockContent } = useContext(BlocksContext);
@@ -30,15 +28,17 @@ export const Header = ({ id, level, content }) => {
   };
 
   return (
-    <Flex minW="full" alignItems={"center"}>
+    <Flex minW="full" alignItems="center">
       <Editable
-        id={id}
-        defaultValue={content}
-        fontSize={getFontSize()}
         as={`h${level?.slice(-1)}`}
+        minW="full"
+        fontSize={getFontSize()}
+        defaultValue={content}
+        id={id}
         onKeyDown={handleKeyDown}
+        selectAllOnFocus={false}
       >
-        <EditablePreview />
+        <EditablePreview w="full" />
         <EditableInput
           sx={{
             "&:focus": {

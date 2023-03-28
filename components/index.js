@@ -4,22 +4,22 @@ import { Header } from "./blocks/Header";
 import { Paragraph } from "./blocks/Paragraph";
 
 import { Toolbar } from "./ui/Toolbar";
-import { CancelButton } from "./ui/CancelButton";
 import { DeleteButton } from "./ui/DeleteButton";
 import { DragHandle } from "./ui/DragHandle";
+import { ConsoleResourceButton } from "./ui/ConsoleResourceButton";
 
 import { Sheet } from "./layout/Sheet";
-import { BlocksList } from "./layout/BlocksList";
+import { DragDropBlocksList } from "./layout/DragDropBlocksList";
 
 export {
   Block,
-  BlocksList,
   DragHandle,
+  DragDropBlocksList,
+  ConsoleResourceButton,
   Sheet,
   Header,
   Paragraph,
   Formula,
   DeleteButton,
-  CancelButton,
   Toolbar,
 };

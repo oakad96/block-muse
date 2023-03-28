@@ -1,4 +1,3 @@
-// components/blocks/Formula.js
 import React from "react";
 import { Box, Input, Text } from "@chakra-ui/react";
 

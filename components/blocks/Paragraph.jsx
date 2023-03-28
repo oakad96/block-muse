@@ -1,7 +1,5 @@
-import { DeleteButton } from "./../ui/DeleteButton";
 import React, { useContext } from "react";
 import {
-  Box,
   Editable,
   EditableInput,
   EditablePreview,
@@ -14,6 +12,10 @@ export const Paragraph = ({ id, content }) => {
 
   const handleKeyDown = (e) => {
     updateBlockContent(id, e.target.value);
+
+    if (e.key === "Enter") {
+      console.log(e.target.form);
+    }
   };
 
   return (
@@ -24,14 +26,19 @@ export const Paragraph = ({ id, content }) => {
         defaultValue={content}
         fontSize="md"
         as="p"
+        minW="full"
+        maxH="min-content"
+        selectAllOnFocus={false}
       >
-        <EditablePreview />
+        <EditablePreview w="full" />
         <EditableInput
           sx={{
             "&:focus": {
               outline: "none",
+              boxSizing: "border-box",
               border: "none",
               boxShadow: "none",
+              h: "min-content",
             },
           }}
         />
