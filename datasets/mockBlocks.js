@@ -1,60 +1,49 @@
-import { generateId } from "@/utils/helpers";
-
-const id = new String();
-
-let mockBlocks = [
+const mockBlocks = [
   {
-    id,
+    id: "w6cswke",
     content: "Introduction",
     type: "H1",
   },
   {
-    id,
+    id: "f2vetg8",
     type: "PARAGRAPH",
     content:
       "This is a sample paragraph explaining the purpose of the document.",
   },
   {
-    id,
+    id: "xkhydfa",
     content: "Section 1",
     type: "H2",
   },
   {
-    id,
+    id: "x9ewkqo",
     type: "PARAGRAPH",
     content:
       "This is the first paragraph of Section 1, providing some context about the topic.",
   },
   {
-    id,
+    id: "zff8x1r",
     type: "PARAGRAPH",
     content:
       "This is the second paragraph of Section 1, containing more detailed information.",
   },
   {
-    id,
+    id: "kdyecl0",
     content: "Section 2",
     type: "H2",
   },
   {
-    id,
+    id: "actp71z",
     type: "PARAGRAPH",
     content:
       "This is the first paragraph of Section 2, introducing a new topic.",
   },
   {
-    id,
+    id: "8a5ee4b",
     type: "PARAGRAPH",
     content:
       "This is the second paragraph of Section 2, offering a deeper analysis.",
   },
 ];
-
-mockBlocks = mockBlocks.map((block) => {
-  return {
-    ...block,
-    id: generateId(),
-  };
-});
 
 export default mockBlocks;

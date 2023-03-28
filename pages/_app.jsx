@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BlocksContext from "../context/BlocksContext";
 import mockBlocks from "@/datasets/mockBlocks";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CircularProgress, Center } from "@chakra-ui/react";
 import { setIdsToIndex } from "@/utils/helpers";
 
 export default function App({ Component, pageProps }) {
-  const [blocks, setBlocks] = useState(mockBlocks);
+  const [blocks, setBlocks] = useState(null);
+
+  useEffect(() => {
+    setBlocks(mockBlocks);
+  }, []);
 
   const operations = {
     setBlocks,
@@ -51,7 +55,7 @@ export default function App({ Component, pageProps }) {
     },
   };
 
-  return (
+  return blocks ? (
     <BlocksContext.Provider
       value={{
         blocks,
@@ -62,5 +66,11 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </ChakraProvider>
     </BlocksContext.Provider>
+  ) : (
+    <ChakraProvider>
+      <Center axis="both">
+        <CircularProgress size="sm" isIndeterminate />
+      </Center>
+    </ChakraProvider>
   );
 }
