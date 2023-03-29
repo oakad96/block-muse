@@ -3,9 +3,10 @@ import { Button, ButtonGroup, Center, Box } from "@chakra-ui/react";
 import BlocksContext from "@/context/BlocksContext";
 import { ParagraphBlock, HeaderBlock, FormulaBlock } from "../../models/block";
 import { generateId } from "@/utils/helpers";
+import { AddIcon } from "@chakra-ui/icons";
 
 export function Toolbar() {
-  const { blocks, addBlock, resetBlocks } = useContext(BlocksContext);
+  const { addBlock, resetBlocks } = useContext(BlocksContext);
 
   const handleAddBlock = (e) => {
     const type = e.target.value;
@@ -33,28 +34,42 @@ export function Toolbar() {
   return (
     <Box mt={4} pt={4}>
       <Center>
-        <ButtonGroup size="xs">
-          <ButtonGroup size="xs" isAttached>
-            <Button value="H1" onClick={handleAddBlock}>
+        <ButtonGroup size="sm" colorScheme="green">
+          <ButtonGroup size="sm" isAttached colorScheme="green">
+            <Button leftIcon={<AddIcon />} value="H1" onClick={handleAddBlock}>
               H1
             </Button>
-            <Button value="H2" onClick={handleAddBlock}>
+            <Button leftIcon={<AddIcon />} value="H2" onClick={handleAddBlock}>
               H2
             </Button>
-            <Button value="H3" onClick={handleAddBlock}>
+            <Button leftIcon={<AddIcon />} value="H3" onClick={handleAddBlock}>
               H3
             </Button>
           </ButtonGroup>
-          <Button value="PARAGRAPH" onClick={handleAddBlock}>
+          <Button
+            leftIcon={<AddIcon />}
+            value="PARAGRAPH"
+            onClick={handleAddBlock}
+          >
             P
           </Button>
-          <Button value="FORMULA" onClick={handleAddBlock}>
+          <Button
+            leftIcon={<AddIcon />}
+            value="FORMULA"
+            onClick={handleAddBlock}
+          >
             F
           </Button>
         </ButtonGroup>
       </Center>
-      <Button onClick={handleResetBlocks} size="xs">
-        Reset
+      <Button
+        onClick={handleResetBlocks}
+        size="xs"
+        variant="outline"
+        colorScheme="red"
+        p="3"
+      >
+        Clear All
       </Button>
     </Box>
   );

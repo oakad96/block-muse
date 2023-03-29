@@ -1,4 +1,4 @@
-import { HStack, Tag, TagLabel, TagLeftIcon } from "@chakra-ui/react";
+import { Badge, HStack } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { DeleteButton, DragHandle } from "..";
@@ -31,7 +31,7 @@ export function SortableItem(props) {
       blocks={props.blocks}
       {...attributes}
     >
-      <Tag
+      <Badge
         size="sm"
         minW="max-content"
         fontSize="2xs"
@@ -40,9 +40,16 @@ export function SortableItem(props) {
         color="gray.900"
         bgColor="gray.300"
         alignSelf="center"
+        sx={{
+          cursor: "unset",
+          "&:hover": {
+            border: "1px solid",
+            transform: "scale(0.92)",
+          },
+        }}
       >
-        <TagLabel>B{props.index}</TagLabel>
-      </Tag>
+        B{props.index}
+      </Badge>
       <DragHandle {...listeners} />
       {props.children}
       <DeleteButton id={props.id} />
