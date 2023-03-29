@@ -56,9 +56,8 @@ const parseExpression = (expression, blocks = {}) => {
   const generateTokens = (expression) => {
     expression = expression.replace(REGEX.WHITE_SPACE, "");
     const pattern =
-      /\bb\d+\.\w+\(\d+\)|\bb\d+\b|\b\d+\b|[-+*/()]|\b\d+\.\d+\b/g;
+      /\b(?:b\d+(?:\.(?:length|left\(\d+\)|right\(\d+\)|upper|lower|proper))?)\b|\b\d+\b,*|[\+\-*/()]/g;
     const validTokens = expression.match(pattern);
-
     const tokens = validTokens;
 
     return tokens?.map((token) => {
@@ -82,12 +81,14 @@ const parseExpression = (expression, blocks = {}) => {
     });
   };
 
+  console.log(generateTokens(expression));
+
   const formatToken = (token) => {
     switch (token?.type) {
       case "BLOCK_REFERENCE":
         const block = blocks[token.referenceIndex];
         if (!block) {
-          return { type: "invalid", value: "Invalid block reference" };
+          return { type: "invalid", value: "Not a valid expression" };
         }
         if (
           block?.type === "PARAGRAPH" ||
@@ -122,7 +123,7 @@ const parseExpression = (expression, blocks = {}) => {
                 block.content.slice(1).toLowerCase();
               break;
             default:
-              token.value = "Invalid property for block index";
+              token.value = "Not a valid expression";
               break;
           }
         } else if (block?.type === "FORMULA") {
@@ -184,7 +185,7 @@ const parseExpression = (expression, blocks = {}) => {
           const left = output.pop();
 
           if (operators[operation] === undefined) {
-            return "Invalid expression";
+            return "Not a valid expression";
           }
 
           output.push(operators[operation](right, left));
@@ -213,9 +214,9 @@ const parseExpression = (expression, blocks = {}) => {
   const evaluate = (output, operatorStack) => {
     while (operatorStack.length > 0) {
       if (operatorStack[operatorStack.length - 1] === "(") {
-        return "Invalid expression";
+        return "Not a valid expression";
       } else if (output.length <= operatorStack.length) {
-        return "Invalid expression";
+        return "Not a valid expression";
       }
 
       const operation = operatorStack.pop();
@@ -223,7 +224,7 @@ const parseExpression = (expression, blocks = {}) => {
       const left = output.pop();
 
       if (right && left && typeof right !== typeof left) {
-        return "Invalid types in expression";
+        return "Not a valid expression";
       }
 
       output.push(operators[operation](right, left));
