@@ -81,8 +81,6 @@ const parseExpression = (expression, blocks = {}) => {
     });
   };
 
-  console.log(generateTokens(expression));
-
   const formatToken = (token) => {
     switch (token?.type) {
       case "BLOCK_REFERENCE":
@@ -236,8 +234,6 @@ const parseExpression = (expression, blocks = {}) => {
   const tokens = generateTokens(expression);
   const output = [];
   const operatorStack = [];
-
-  console.log(tokens);
 
   for (let token of tokens || []) {
     token = formatToken(token);
