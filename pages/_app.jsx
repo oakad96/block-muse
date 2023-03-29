@@ -48,6 +48,38 @@ export default function App({ Component, pageProps }) {
       });
     },
 
+    updateFormula(id, updatedFormula) {
+      setBlocks((prevBlocks) => {
+        const newBlocks = prevBlocks.map((block) => {
+          if (block.id === id) {
+            return {
+              ...block,
+              formula: updatedFormula,
+            };
+          }
+          return block;
+        });
+
+        return newBlocks;
+      });
+    },
+
+    updateResult(id, updatedResult) {
+      setBlocks((prevBlocks) => {
+        const newBlocks = prevBlocks.map((block) => {
+          if (block.id === id) {
+            return {
+              ...block,
+              result: updatedResult,
+            };
+          }
+          return block;
+        });
+
+        return newBlocks;
+      });
+    },
+
     resetBlocks() {
       setBlocks([]);
     },

@@ -27,6 +27,10 @@ export const Header = ({ id, level, content }) => {
     updateBlockContent(id, e.target.value);
   };
 
+  const onSubmit = (e) => {
+    updateBlockContent(id, e);
+  };
+
   return (
     <Flex minW="full" alignItems="center">
       <Editable
@@ -37,6 +41,8 @@ export const Header = ({ id, level, content }) => {
         id={id}
         onKeyDown={handleKeyDown}
         selectAllOnFocus={false}
+        onCancel={onSubmit}
+        onSubmit={onSubmit}
       >
         <EditablePreview w="full" />
         <EditableInput

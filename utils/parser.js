@@ -1,4 +1,4 @@
-const parseExpression = (expression, blocks) => {
+const parseExpression = (expression, blocks = {}) => {
   const precedence = {
     "+": 1,
     "-": 1,
@@ -23,38 +23,54 @@ const parseExpression = (expression, blocks) => {
 
   const REGEX = {
     WHITE_SPACE: /\s+/g,
-    ARITHMETIC_OPERATORS: /([\+\-\*/\(\)])/,
+    ARITHMETIC_OPERATORS: /[\+\-\*/()]/,
     LETTER: /[a-zA-Z]/g,
     FLOAT_NUMBER: /\d+/,
+    JUST_NUMBERS: /^[+-]?\d+(?:\.\d+)?$/,
+  };
+
+  const parseProperty = (str) => {
+    const regex = /^([a-z])(\d+)(?:\.([a-z]+)(?:\((\d+)\))?)?$/i;
+    const match = str.match(regex);
+
+    if (match) {
+      const referenceIndex = parseInt(match[2], 10);
+      const property = match[3] ? match[3] : "self";
+      const parameter = parseInt(match[4], 10);
+
+      const obj = {
+        referenceIndex,
+        property,
+        parameter,
+      };
+
+      return obj;
+    }
   };
 
   const generateTokens = (expression) => {
-    return expression
-      .replace(REGEX.WHITE_SPACE, "")
-      .split(REGEX.ARITHMETIC_OPERATORS)
-      .filter((token) => {
-        return token.length > 0;
-      })
-      .map((token) => {
-        if (isBlockReference(token)) {
-          return {
-            type: "BLOCK_REFERENCE",
-            value: token,
-            referenceIndex: token.split(".")[0].replace(REGEX.FLOAT_NUMBER, ""),
-            property: token.split(".")[1] ? token.split(".")[1] : "self",
-          };
-        } else if (isNumber(token)) {
-          return {
-            type: "NUMBER",
-            value: parseFloat(token),
-          };
-        } else {
-          return {
-            type: "OPERATOR",
-            value: token,
-          };
-        }
-      });
+    const regex = /([a-zA-Z]\d+(?:\.[a-zA-Z]+(?:\(\d+\))?)?|\d+|[+\-*/()])/g;
+    const tokens = expression.match(regex);
+
+    return tokens.map((token) => {
+      if (isBlockReference(token)) {
+        return {
+          type: "BLOCK_REFERENCE",
+          value: token,
+          ...parseProperty(expression),
+        };
+      } else if (isNumber(token)) {
+        return {
+          type: "NUMBER",
+          value: parseFloat(token),
+        };
+      } else {
+        return {
+          type: "OPERATOR",
+          value: token,
+        };
+      }
+    });
   };
 
   const formatToken = (token) => {
@@ -62,19 +78,44 @@ const parseExpression = (expression, blocks) => {
       case "BLOCK_REFERENCE":
         const block = blocks[token.referenceIndex];
 
-        if (block.type === "PARAGRAPH" || block.type === "HEADER") {
+        if (
+          block?.type === "PARAGRAPH" ||
+          block?.type === "H1" ||
+          block?.type === "H2" ||
+          block?.type === "H3"
+        ) {
           if (token.property === "self") {
-            token.value = block.content.match(REGEX.FLOAT_NUMBER)
+            token.value = block.content.match(REGEX.JUST_NUMBERS)
               ? parseFloat(block.content)
               : block.content;
           } else if (token.property === "length") {
             token.value = block.content.length;
-          } else {
-            throw new Error("Invalid property");
+          } else if (token.property === "left") {
+            token.value = block.content.slice(0, token.parameter);
+          } else if (token.property === "right") {
+            token.value = block.content.slice(-token.parameter);
+          } else if (token.property === "upper") {
+            token.value = block.content.toUpperCase();
+          } else if (token.property === "lower") {
+            token.value = block.content.toLowerCase();
+          } else if (token.property === "proper") {
+            token.value =
+              block.content.charAt(0).toUpperCase() +
+              block.content.slice(1).toLowerCase();
+          }
+        } else if (block?.type === "FORMULA") {
+          if (token.property === "self") {
+            token.value = block.result;
+          } else if (token.property === "length") {
+            token.value = block.result.length;
+          } else if (token.property === "left") {
+            token.value = block.result.slice(0, token.parameter);
+          } else if (token.property === "right") {
+            token.value = block.result.slice(-token.parameter);
           }
         }
-        break;
 
+        break;
       case "NUMBER":
         token.value = parseFloat(token.value);
         break;
@@ -94,6 +135,11 @@ const parseExpression = (expression, blocks) => {
     } else if (token.type === "BLOCK_REFERENCE") {
       switch (token.property) {
         case "self":
+        case "left":
+        case "right":
+        case "upper":
+        case "lower":
+        case "proper":
           output.push(token.value);
 
           break;
@@ -160,4 +206,4 @@ const parseExpression = (expression, blocks) => {
   return evaluate(output, operatorStack);
 };
 
-console.log(parseExpression("( 15 / 2) - (2 * 12)", [{}]));
+export default parseExpression;

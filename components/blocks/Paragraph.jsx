@@ -18,12 +18,18 @@ export const Paragraph = ({ id, content }) => {
     }
   };
 
+  const onSubmit = (e) => {
+    updateBlockContent(id, e.target.value);
+  };
+
   return (
     <Flex minW="full" alignItems={"center"}>
       <Editable
         id={id}
         onKeyDown={handleKeyDown}
         defaultValue={content}
+        onCancel={onSubmit}
+        onSubmit={onSubmit}
         fontSize="md"
         as="p"
         minW="full"
