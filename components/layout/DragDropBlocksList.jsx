@@ -54,12 +54,13 @@ export const DragDropBlocksList = () => {
         blocks={blocks}
         strategy={verticalListSortingStrategy}
       >
-        {blocks.map((block) => (
+        {blocks.map((block, index) => (
           <SortableItem
             key={block.id}
             id={block.id}
             block={block}
             blocks={blocks}
+            index={index}
             handle
           >
             <Block

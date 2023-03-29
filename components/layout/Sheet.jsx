@@ -3,7 +3,7 @@ import React from "react";
 
 export const Sheet = ({ children, title }) => {
   return (
-    <Container maxW="3xl">
+    <Container maxW="container.xl">
       <Box
         bg="white"
         border="1px solid"
