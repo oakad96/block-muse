@@ -1,55 +1,75 @@
 const mockBlocks = [
   {
     id: "w6cswke",
-    content: "Introduction",
+    content: "Hello World!",
     type: "H1",
   },
   {
-    id: "f2vetg8",
+    id: "as12af123s",
     type: "PARAGRAPH",
-    content:
-      "This is a sample paragraph explaining the purpose of the document.",
+    content: "This is a block based text editor.",
   },
   {
-    id: "xkhydfa",
-    content: "Section 1",
+    id: "a1das28",
+    type: "PARAGRAPH",
+    content:
+      "It allows you to create and edit text blocks, and to apply formulas to them.",
+  },
+  {
+    id: "a5sd4a56sd",
+    type: "PARAGRAPH",
+    content:
+      "You can choose Heading 1, Heading 2, Heading 3, or Paragraph for each block besides formula.",
+  },
+  {
+    id: "a5sd456as",
+    content: "This is a Heading 2",
     type: "H2",
   },
   {
-    id: "x9ewkqo",
+    id: "a5s4da5sd",
     type: "PARAGRAPH",
-    content:
-      "This is the first paragraph of Section 1, providing some context about the topic.",
+    content: "This is an another paragraph block you can click on it to edit.",
   },
   {
-    id: "zff8x1r",
-    type: "PARAGRAPH",
-    content:
-      "This is the second paragraph of Section 1, containing more detailed information.",
+    id: "5asdasd8",
+    type: "H3",
+    content: "This is an Heading 3.",
   },
   {
     id: "kdyecl0",
-    content: "Section 2",
-    type: "H2",
+    type: "PARAGRAPH",
+    content:
+      "On left side, you can see the handle. You can drag it to move the block and change the order.",
   },
   {
     id: "actp71z",
     type: "PARAGRAPH",
+    content: "On the left side, there is remove block button.",
+  },
+  {
+    id: "54dasw8",
+    type: "PARAGRAPH",
     content:
-      "This is the first paragraph of Section 2, introducing a new topic.",
+      "Below, there is a toolbar. You can add a new block by clicking on the type buttons.",
   },
   {
     id: "8a5ee4b",
     type: "PARAGRAPH",
     content:
-      "This is the second paragraph of Section 2, offering a deeper analysis.",
+      "Below, there is a formula block. b1 is a reference to the first block. You can use b1, b1.length, b1.left(number), b1.right(number), b1.upper, b1.lower, b1.proper.",
   },
   {
-    id: "8a5e24b",
+    id: "8asqwfsa5",
+    type: "PARAGRAPH",
+    content: "Also you can use arithmetic operations like 'b1.length + 3'.",
+  },
+  {
+    id: "asd8asd8",
     type: "FORMULA",
-    content: "4",
-    result: "4",
-    formula: "2 + 2",
+    content: "4 + 4 * 2 - (3 * 2) / 2 + b2.length",
+    result: "",
+    formula: "4 + 4 * 2 - (3 * 2) / 2 + b2.length",
   },
 ];
 

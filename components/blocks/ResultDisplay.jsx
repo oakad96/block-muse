@@ -1,15 +1,10 @@
-import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Code } from "@chakra-ui/react";
+import parseExpression from "@/utils/parser";
 
-export function ResultDisplay({ block }) {
+export function ResultDisplay({ block, blocks }) {
   return (
     <Box as="div">
-      <Text as="p">
-        ={" "}
-        {typeof block.result !== "undefined"
-          ? block.result
-          : "Not a valid expression"}
-      </Text>
+      <Code as="p">= {parseExpression(block.formula, blocks)}</Code>
     </Box>
   );
 }

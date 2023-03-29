@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import BlocksContext from "../context/BlocksContext";
 import mockBlocks from "@/datasets/mockBlocks";
 import { ChakraProvider, CircularProgress, Center } from "@chakra-ui/react";
+import parseExpression from "@/utils/parser";
 
 export default function App({ Component, pageProps }) {
   const [blocks, setBlocks] = useState(null);
@@ -71,6 +72,23 @@ export default function App({ Component, pageProps }) {
             return {
               ...block,
               result: updatedResult,
+            };
+          }
+          return block;
+        });
+
+        return newBlocks;
+      });
+    },
+
+    refreshResults() {
+      setBlocks((prevBlocks) => {
+        const newBlocks = prevBlocks.map((block) => {
+          if (block.type === "FORMULA") {
+            console.log(block);
+            return {
+              ...block,
+              result: parseExpression(block.content),
             };
           }
           return block;

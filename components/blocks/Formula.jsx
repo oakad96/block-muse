@@ -5,6 +5,8 @@ import {
   EditableInput,
   EditablePreview,
   Flex,
+  Code,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import parseExpression from "../../utils/parser";
 import BlocksContext from "../../context/BlocksContext";
@@ -19,6 +21,7 @@ export const Formula = ({ id, content, block }) => {
   const handleKeyDown = (e) => {
     updateFormula(id, e.target.value);
     updateBlockContent(id, e.target.value);
+    updateResult(id, parseExpression(e.target.value, blocks));
   };
 
   const onCancel = (e) => {
@@ -45,6 +48,7 @@ export const Formula = ({ id, content, block }) => {
         selectAllOnFocus={false}
       >
         <EditablePreview
+          as={Code}
           w="full"
           sx={{
             bgColor: "gray.300",
@@ -53,6 +57,7 @@ export const Formula = ({ id, content, block }) => {
         <EditableInput
           sx={{
             bgColor: "gray.300",
+            fontFamily: "monospace",
             "&:focus": {
               outline: "none",
               boxSizing: "border-box",
@@ -60,8 +65,10 @@ export const Formula = ({ id, content, block }) => {
               boxShadow: "none",
               h: "min-content",
               bgColor: "gray.300",
+              fontFamily: "monospace",
             },
           }}
+          list="suggestions"
         />
         <ResultDisplay isEditing={isEditing} block={block} blocks={blocks} />
       </Editable>

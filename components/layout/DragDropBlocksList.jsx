@@ -19,7 +19,7 @@ import { SortableItem } from "../blocks/SortableItem";
 import BlocksContext from "@/context/BlocksContext";
 
 export const DragDropBlocksList = () => {
-  const { blocks, setBlocks } = useContext(BlocksContext);
+  const { blocks, setBlocks, refreshResults } = useContext(BlocksContext);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -39,6 +39,7 @@ export const DragDropBlocksList = () => {
         return arrayMove(blocks, oldIndex, newIndex);
       });
     }
+    refreshResults();
   };
 
   return (

@@ -1,4 +1,4 @@
-const parseExpression = (expression, blocks = {}) => {
+const parseExpression = (expression, blocks = []) => {
   if (!expression) return null;
   if (typeof expression !== "string") return null;
   if (expression.length === 0) return null;

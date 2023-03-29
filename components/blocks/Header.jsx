@@ -13,13 +13,13 @@ export const Header = ({ id, level, content }) => {
   const getFontSize = () => {
     switch (level) {
       case "H1":
-        return "2xl";
+        return "3xl";
       case "H2":
-        return "xl";
+        return "2xl";
       case "H3":
-        return "lg";
+        return "xl";
       default:
-        return "md";
+        return "lg";
     }
   };
 
@@ -35,6 +35,7 @@ export const Header = ({ id, level, content }) => {
     <Flex minW="full" alignItems="center">
       <Editable
         as={`h${level?.slice(-1)}`}
+        fontWeight="bold"
         minW="full"
         fontSize={getFontSize()}
         defaultValue={content}
