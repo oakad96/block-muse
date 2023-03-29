@@ -61,8 +61,9 @@ bIndex.lower: all lower case
 proper: First letter capitalize
 ```
 
-###
+### Solution stack
 
+- State: React.useContext
 - UI library: chakra-ui
 - dnd: dnd-kit. also tried react-dnd and react-beautiful-dnd
 - deployment: vercel
