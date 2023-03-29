@@ -55,7 +55,8 @@ const parseExpression = (expression, blocks = {}) => {
 
   const generateTokens = (expression) => {
     expression = expression.replace(REGEX.WHITE_SPACE, "");
-    const pattern = /\b(b\d+(\.\w+(\(\d+\))?)?|\d+|[+\-*/()])|\(|\)/g;
+    const pattern =
+      /\bb\d+\.\w+\(\d+\)|\bb\d+\b|\b\d+\b|[-+*/()]|\b\d+\.\d+\b/g;
     const validTokens = expression.match(pattern);
 
     const tokens = validTokens;
@@ -234,6 +235,8 @@ const parseExpression = (expression, blocks = {}) => {
   const tokens = generateTokens(expression);
   const output = [];
   const operatorStack = [];
+
+  console.log(tokens);
 
   for (let token of tokens || []) {
     token = formatToken(token);
