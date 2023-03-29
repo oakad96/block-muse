@@ -6,7 +6,6 @@ import {
   EditablePreview,
   Flex,
   Code,
-  InputLeftAddon,
 } from "@chakra-ui/react";
 import parseExpression from "../../utils/parser";
 import BlocksContext from "../../context/BlocksContext";

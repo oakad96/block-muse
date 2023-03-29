@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Flex } from "@chakra-ui/react";
-import BlocksContext from "../context/BlocksContext";
 import {
   Sheet,
   DragDropBlocksList,
