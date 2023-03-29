@@ -1,0 +1,47 @@
+Generate a regex tokenizer for these rules:
+
+should tokenize:
+1)
+(letter b) + (number) + (dot) + (word) + (number inside parenthesis)
+
+examples:
+
+b2.length
+b2.left(2)
+b12.right(2)
+b3.upper
+b4.proper
+
+should not match of the form:
+4b
+a4
+c4
+4asdasd
+
+2)
+numbers isolated
+
+examples:
+
+1,
+2,
+3
+
+should not match of the form:
+
+a1,
+asda5a,
+
+
+3)
+arithmetic operators
+
++ * / -
+
+Example expression:
+
+b2.length + b1.length + (8 / 3) - 5 * 3 + b1.upper(2)
+
+this should tokenize to:
+
+[b2.length, +, b1.length, +, (, 8, /, 3, ), -, 5, *, b1.upper(2)]

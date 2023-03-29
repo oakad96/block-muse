@@ -1,4 +1,9 @@
 const parseExpression = (expression, blocks = {}) => {
+  if (!expression) return null;
+  if (typeof expression !== "string") return null;
+  if (expression.length === 0) return null;
+  if (expression.match(/^\s+$/)) return null;
+
   const precedence = {
     "+": 1,
     "-": 1,
@@ -14,11 +19,11 @@ const parseExpression = (expression, blocks = {}) => {
   };
 
   const isBlockReference = (token) => {
-    return token.match(/[a-zA-Z]\d+(\.\w+)?/);
+    return token.match(/^([a-z])(\d+)(?:\.([a-z]+)(?:\((\d+)\))?)?$/i);
   };
 
   const isNumber = (token) => {
-    return token.match(/[-+]?(\d*\.)?\d+(e[-+]?\d+)?/);
+    return token.match(/^(?![a-zA-Z]\d)[+-]?\d+(?:\.\d+)?$/);
   };
 
   const REGEX = {
@@ -26,11 +31,11 @@ const parseExpression = (expression, blocks = {}) => {
     ARITHMETIC_OPERATORS: /[\+\-\*/()]/,
     LETTER: /[a-zA-Z]/g,
     FLOAT_NUMBER: /\d+/,
-    JUST_NUMBERS: /^[+-]?\d+(?:\.\d+)?$/,
+    JUST_NUMBERS: /^(?![a-zA-Z]\d)[+-]?\d+(?:\.\d+)?$/,
   };
 
   const parseProperty = (str) => {
-    const regex = /^([a-z])(\d+)(?:\.([a-z]+)(?:\((\d+)\))?)?$/i;
+    const regex = /^([b])(\d+)(?:\.([a-z]+)(?:\((\d+)\))?)?$/i;
     const match = str.match(regex);
 
     if (match) {
@@ -49,15 +54,18 @@ const parseExpression = (expression, blocks = {}) => {
   };
 
   const generateTokens = (expression) => {
-    const regex = /([a-zA-Z]\d+(?:\.[a-zA-Z]+(?:\(\d+\))?)?|\d+|[+\-*/()])/g;
-    const tokens = expression.match(regex);
+    expression = expression.replace(REGEX.WHITE_SPACE, "");
+    const pattern = /\b(b\d+(\.\w+(\(\d+\))?)?|\d+|[+\-*/()])|\(|\)/g;
+    const validTokens = expression.match(pattern);
 
-    return tokens.map((token) => {
+    const tokens = validTokens;
+
+    return tokens?.map((token) => {
       if (isBlockReference(token)) {
         return {
           type: "BLOCK_REFERENCE",
           value: token,
-          ...parseProperty(expression),
+          ...parseProperty(token),
         };
       } else if (isNumber(token)) {
         return {
@@ -74,59 +82,81 @@ const parseExpression = (expression, blocks = {}) => {
   };
 
   const formatToken = (token) => {
-    switch (token.type) {
+    switch (token?.type) {
       case "BLOCK_REFERENCE":
         const block = blocks[token.referenceIndex];
-
+        if (!block) {
+          return { type: "invalid", value: "Invalid block reference" };
+        }
         if (
           block?.type === "PARAGRAPH" ||
           block?.type === "H1" ||
           block?.type === "H2" ||
           block?.type === "H3"
         ) {
-          if (token.property === "self") {
-            token.value = block.content.match(REGEX.JUST_NUMBERS)
-              ? parseFloat(block.content)
-              : block.content;
-          } else if (token.property === "length") {
-            token.value = block.content.length;
-          } else if (token.property === "left") {
-            token.value = block.content.slice(0, token.parameter);
-          } else if (token.property === "right") {
-            token.value = block.content.slice(-token.parameter);
-          } else if (token.property === "upper") {
-            token.value = block.content.toUpperCase();
-          } else if (token.property === "lower") {
-            token.value = block.content.toLowerCase();
-          } else if (token.property === "proper") {
-            token.value =
-              block.content.charAt(0).toUpperCase() +
-              block.content.slice(1).toLowerCase();
+          switch (token.property) {
+            case "self":
+              token.value = block.content.match(REGEX.JUST_NUMBERS)
+                ? parseFloat(block.content)
+                : block.content;
+              break;
+            case "length":
+              token.value = block.content.length;
+              break;
+            case "left":
+              token.value = block.content.slice(0, token.parameter);
+              break;
+            case "right":
+              token.value = block.content.slice(-token.parameter);
+              break;
+            case "upper":
+              token.value = block.content.toUpperCase();
+              break;
+            case "lower":
+              token.value = block.content.toLowerCase();
+              break;
+            case "proper":
+              token.value =
+                block.content.charAt(0).toUpperCase() +
+                block.content.slice(1).toLowerCase();
+              break;
+            default:
+              token.value = "Invalid property for block index";
+              break;
           }
         } else if (block?.type === "FORMULA") {
-          if (token.property === "self") {
-            token.value = block.result;
-          } else if (token.property === "length") {
-            token.value = block.result.length;
-          } else if (token.property === "left") {
-            token.value = block.result.slice(0, token.parameter);
-          } else if (token.property === "right") {
-            token.value = block.result.slice(-token.parameter);
+          switch (token.property) {
+            case "self":
+              token.value = block.result;
+              break;
+            case "length":
+              token.value = block.result.length;
+              break;
+            case "left":
+              token.value = block.result.slice(0, token.parameter);
+              break;
+            case "right":
+              token.value = block.result.slice(-token.parameter);
+              break;
+            default:
+              break;
           }
         }
 
         break;
       case "NUMBER":
         token.value = parseFloat(token.value);
-        break;
 
+        break;
       case "OPERATOR":
         token.value = token.value;
-        break;
 
+        break;
       default:
         break;
     }
+
+    return token;
   };
 
   const fillOperatorStackAndOutputArray = (token) => {
@@ -134,20 +164,13 @@ const parseExpression = (expression, blocks = {}) => {
       output.push(parseFloat(token.value));
     } else if (token.type === "BLOCK_REFERENCE") {
       switch (token.property) {
-        case "self":
-        case "left":
-        case "right":
-        case "upper":
-        case "lower":
-        case "proper":
-          output.push(token.value);
-
-          break;
         case "length":
-          output.push(parseFloat(token.value));
+          output.push(parseInt(token.value));
 
           break;
         default:
+          output.push(token.value);
+
           break;
       }
     } else if (token.type === "OPERATOR") {
@@ -158,6 +181,10 @@ const parseExpression = (expression, blocks = {}) => {
           const operation = operatorStack.pop();
           const right = output.pop();
           const left = output.pop();
+
+          if (operators[operation] === undefined) {
+            return "Invalid expression";
+          }
 
           output.push(operators[operation](right, left));
         }
@@ -184,9 +211,19 @@ const parseExpression = (expression, blocks = {}) => {
 
   const evaluate = (output, operatorStack) => {
     while (operatorStack.length > 0) {
+      if (operatorStack[operatorStack.length - 1] === "(") {
+        return "Invalid expression";
+      } else if (output.length <= operatorStack.length) {
+        return "Invalid expression";
+      }
+
       const operation = operatorStack.pop();
       const right = output.pop();
       const left = output.pop();
+
+      if (right && left && typeof right !== typeof left) {
+        return "Invalid types in expression";
+      }
 
       output.push(operators[operation](right, left));
     }
@@ -198,8 +235,8 @@ const parseExpression = (expression, blocks = {}) => {
   const output = [];
   const operatorStack = [];
 
-  for (let token of tokens) {
-    formatToken(token);
+  for (let token of tokens || []) {
+    token = formatToken(token);
     fillOperatorStackAndOutputArray(token);
   }
 

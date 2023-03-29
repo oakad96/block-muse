@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react";
+import { ResultDisplay } from "./ResultDisplay";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Editable,
   EditableInput,
   EditablePreview,
   Flex,
-  Box,
-  Text,
 } from "@chakra-ui/react";
 import parseExpression from "../../utils/parser";
 import BlocksContext from "../../context/BlocksContext";
 
-export const Formula = ({ id, content, formula, result }) => {
+export const Formula = ({ id, content, block }) => {
   const { blocks, updateBlockContent, updateFormula, updateResult } =
     useContext(BlocksContext);
   const [isEditing, setIsEditing] = useState(false);
@@ -62,11 +61,7 @@ export const Formula = ({ id, content, formula, result }) => {
             },
           }}
         />
-        <Box as="div">
-          <Text as="p">
-            {!isEditing && `= ${result ? result : "No result"}`}
-          </Text>
-        </Box>
+        <ResultDisplay isEditing={isEditing} block={block} />
       </Editable>
     </Flex>
   );

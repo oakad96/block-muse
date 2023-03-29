@@ -49,13 +49,13 @@ export const DragDropBlocksList = () => {
     >
       <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
         {blocks.map((block) => (
-          <SortableItem key={block.id} id={block.id} handle>
+          <SortableItem key={block.id} id={block.id} block={block} handle>
             <Block
               id={block.id}
               content={block.content}
               type={block.type}
               formula={block.formula}
-              result={block.result}
+              block={block}
             />
           </SortableItem>
         ))}

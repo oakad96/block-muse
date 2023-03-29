@@ -12,14 +12,10 @@ export const Paragraph = ({ id, content }) => {
 
   const handleKeyDown = (e) => {
     updateBlockContent(id, e.target.value);
-
-    if (e.key === "Enter") {
-      console.log(e.target.form);
-    }
   };
 
   const onSubmit = (e) => {
-    updateBlockContent(id, e.target.value);
+    updateBlockContent(id, e);
   };
 
   return (

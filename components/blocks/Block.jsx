@@ -1,7 +1,7 @@
 import { Formula, Paragraph, Header } from "..";
 import { Flex } from "@chakra-ui/react";
 
-export const Block = ({ id, type, content, formula, result }) => {
+export const Block = ({ id, type, content, formula, block }) => {
   const renderBlock = () => {
     switch (type) {
       case "H1":
@@ -25,7 +25,7 @@ export const Block = ({ id, type, content, formula, result }) => {
               id={id}
               content={content}
               formula={formula}
-              result={result}
+              block={block}
             />
           </Flex>
         );

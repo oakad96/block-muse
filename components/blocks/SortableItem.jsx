@@ -4,12 +4,21 @@ import { CSS } from "@dnd-kit/utilities";
 import { DeleteButton, DragHandle } from "..";
 
 export function SortableItem(props) {
-  const { attributes, listeners, setNodeRef, transform } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    translate,
+  } = useSortable({
     id: props.id,
   });
 
   const style = {
     transform: CSS.Transform.toString(transform),
+    transition,
+    translate,
   };
 
   return (
