@@ -8,13 +8,11 @@ import {
   ConsoleResourceButton,
 } from "../components";
 
-function Home() {
-  const { blocks } = useContext(BlocksContext);
-
+function Home({ blocks }) {
   return (
     <Flex direction="column">
-      <Sheet title="Document">
-        <DragDropBlocksList />
+      <Sheet title="Document" blocks={blocks}>
+        <DragDropBlocksList blocks={blocks} />
         <Toolbar />
         <ConsoleResourceButton resource={blocks} />
       </Sheet>

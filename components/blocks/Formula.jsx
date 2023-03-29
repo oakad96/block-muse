@@ -1,5 +1,5 @@
 import { ResultDisplay } from "./ResultDisplay";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   Editable,
   EditableInput,
@@ -10,7 +10,9 @@ import parseExpression from "../../utils/parser";
 import BlocksContext from "../../context/BlocksContext";
 
 export const Formula = ({ id, content, block }) => {
-  const { blocks, updateBlockContent, updateFormula, updateResult } =
+  const { blocks } = useContext(BlocksContext);
+
+  const { updateBlockContent, updateFormula, updateResult } =
     useContext(BlocksContext);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -61,7 +63,7 @@ export const Formula = ({ id, content, block }) => {
             },
           }}
         />
-        <ResultDisplay isEditing={isEditing} block={block} />
+        <ResultDisplay isEditing={isEditing} block={block} blocks={blocks} />
       </Editable>
     </Flex>
   );

@@ -46,16 +46,28 @@ export const DragDropBlocksList = () => {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      blocks={blocks}
     >
-      <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={blocks}
+        blocks={blocks}
+        strategy={verticalListSortingStrategy}
+      >
         {blocks.map((block) => (
-          <SortableItem key={block.id} id={block.id} block={block} handle>
+          <SortableItem
+            key={block.id}
+            id={block.id}
+            block={block}
+            blocks={blocks}
+            handle
+          >
             <Block
               id={block.id}
               content={block.content}
               type={block.type}
               formula={block.formula}
               block={block}
+              blocks={blocks}
             />
           </SortableItem>
         ))}

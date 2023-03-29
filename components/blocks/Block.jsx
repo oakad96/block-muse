@@ -1,5 +1,6 @@
 import { Formula, Paragraph, Header } from "..";
 import { Flex } from "@chakra-ui/react";
+import React, { useContext } from "react";
 
 export const Block = ({ id, type, content, formula, block }) => {
   const renderBlock = () => {

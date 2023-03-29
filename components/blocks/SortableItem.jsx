@@ -28,6 +28,7 @@ export function SortableItem(props) {
       minW="full"
       ref={setNodeRef}
       style={style}
+      blocks={props.blocks}
       {...attributes}
     >
       <DragHandle {...listeners} />
