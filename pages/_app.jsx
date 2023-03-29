@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import BlocksContext from "../context/BlocksContext";
 import mockBlocks from "@/datasets/mockBlocks";
 import { ChakraProvider, CircularProgress, Center } from "@chakra-ui/react";
 import parseExpression from "@/utils/parser";
 
 export default function App({ Component, pageProps }) {
-  const [blocks, setBlocks] = useState(null);
-
-  useEffect(() => {
-    setBlocks(mockBlocks);
-  }, []);
+  const [blocks, setBlocks] = useState(mockBlocks);
 
   const operations = {
     setBlocks,
